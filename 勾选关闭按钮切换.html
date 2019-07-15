@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<style type="text/css">
+		input[type="checkbox"] {
+			opacity: 0;
+			position: absolute;
+			z-index: -1;
+		}
+
+		.button {
+			height: 5em;
+			width: 9em;
+			align-items: center;
+			background: #2c3e50;
+			border-radius: 2.5em;
+			display: flex;
+			transition: all 0.5s ease;
+			cursor: pointer;
+		}
+
+		input[type="checkbox"]:checked+.button {
+			background: #16A085;
+		}
+
+		input[type="checkbox"]:checked+.button .cir {
+			margin-left: 50%;
+			background: #1abc9c;
+		}
+		input[type="checkbox"]:checked+.button .cir:before {
+			content: "✔";
+			color: white;
+			font-size: 2em;
+			font-weight: bold;
+		}
+
+		.button .cir {
+			display: flex;
+			margin-left: 0.5em;
+			justify-content: center;
+			align-items: center;
+			width: 4em;
+			height: 4em;
+			background: #34495e;
+			border-radius: 50%;
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+			transition: all 0.5s ease;
+		}
+
+		.button .cir:before {
+			content: "\00D7";
+			color: white;
+			font-size: 2em;
+			font-weight: bold;
+		}
+	</style>
+	<body>
+		<input type="checkbox" name="" id="checkbox" value="" />
+		<label class="button" for="checkbox">
+			<span class="cir"></span>
+		</label>
+	</body>
+</html>

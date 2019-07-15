@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		<title></title>
+	</head>
+	<style type="text/css">
+		body{
+			background: #2a2929;
+		}
+		.container{
+			margin: 0;
+			height: 400px;
+			width: 400px;
+			position: relative;
+			margin: 10% auto;
+		}
+
+		.box1 span{
+			display: block;
+			position: absolute;
+			height: 47px;
+			width: 220px;
+			background: chocolate;
+			animation: 2s frame1 ease forwards;
+		}
+		.box1 p:last-child{
+			color: #F39B00;
+		}
+		.box1{
+			position: absolute;
+			display: block;
+			height: 47px;
+			width: 220px;
+			overflow: hidden;
+		}
+
+		.box1 p{
+			display: block;
+			color: #FFFFFF;
+			font-weight: bolder;
+			font-size: 29px;
+			height: 47px;
+			line-height: 47px;
+			width: 220px;
+			position: absolute;
+			margin-top: 0;
+			opacity: 0;
+			animation: .6s word1 forwards;
+			animation-delay:1.8s;
+		}
+		
+		.box2{
+			position: absolute;
+			height: 27px;
+			width: 220px;
+			margin-top: 47px;
+			overflow: hidden;
+		}
+
+		.box2 span{
+			display: block;
+			height: 27px;
+			width: 0;
+			position: absolute;
+			background: #5F9EA0;
+			animation: 2s frame1 ease forwards;
+			animation-delay: 2.2s;
+		}
+
+		.box2 p{
+			display: block;
+			position: absolute;
+			height: 27px;
+			line-height: 27px;
+			font-size: 13px;
+			margin-top: 0;
+			color: rgba(255, 255, 255, .6);
+			opacity: 0;
+			animation: .6s word1 forwards;
+			animation-delay:3.7s;
+		}
+
+		@keyframes frame1 {
+			from {
+				width: 0;
+				margin-left: 0;
+			}
+
+			50% {
+				width: 220px;
+				margin-left: 0;
+			}
+
+			to {
+				width: 220px;
+				margin-left: 220px;
+			}
+		}
+
+		@keyframes word1 {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+	</style>
+	<body>
+		<div class="container">
+			<div class="box1">
+				<p>Hello World!</p><span></span>
+			</div>
+			<div class="box2">
+				<p >CSS3 文字遮罩</p><span></span>
+			</div>
+		</div>
+	</body>
+</html>

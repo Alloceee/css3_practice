@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+</head>
+<style type="text/css">
+	*{margin: 0;padding: 0;}
+	html,body{height: 100%;background: #F5F5DC;}
+	.wrap{
+		height: 100%;
+		position: relative;
+		transform-style: preserve-3d;
+		animation: 5s do ease infinite;
+	}
+	.box{
+		width: 200px;
+		height: 200px;
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		margin: -100px 0 0 -100px;
+		line-height: 200px;
+		text-align: center;
+		font-size: 48px;
+		color: white;
+	}
+	.box1{
+		transform: rotateY(90deg) translateZ(-100px);
+		background: rgba(128,0,128,.5);
+	}
+	.box2{
+		transform: rotateY(90deg) translateZ(100px);
+		background: rgba(255,0,255,.5);
+	}
+	.box3{
+		transform: rotateX(90deg) translateZ(100px);
+		background: rgba(255,153,204,.5);
+	}
+	.box4{
+		transform: rotateX(90deg) translateZ(-100px);
+		background: rgba(0,204,255,.5);
+	}
+	.box5{
+		transform: translateZ(-100px);
+		background: rgba(153,204,153,.5);
+	}
+	.box6{
+		transform: translateZ(100px);
+		background: rgba(0,255,255,.5);
+	}
+	@keyframes do{
+		from{transform: rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+		transform-origin: center center;}
+		to{transform: rotateX(180deg) rotateY(180deg) rotateZ(180deg);
+		transform-origin: center center;}
+	}
+</style>
+<body>
+	<div class="wrap">
+		<div class="box1 box"></div>
+		<div class="box2 box"></div>
+		<div class="box3 box"></div>
+		<div class="box4 box"></div>
+		<div class="box5 box"></div>
+		<div class="box6 box"></div>
+	</div>
+</body>
+</html>
