@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+	</head>
+	<body>
+		<style type="text/css">
+			body{
+				font-family: '微软雅黑';
+			}
+			.main{
+				height: 400px;
+				width: 640px;
+				position: relative;
+				margin: 0 auto;
+			}
+			.pic{
+				height: 400px;
+				width: 640px;
+				position: relative;
+				text-align: center;
+				overflow: hidden;
+			}
+			.word{
+				height: 400px;
+				width: 660px;
+				top: 0;
+				position: absolute;
+			}
+			.pic img{
+				height: 400px;
+				width: 660px;
+				z-index: -5;
+			}
+			.pic::before{
+				content: '';
+				position: absolute;
+				height: 0;
+				width: 165px;
+				background: #00000078;
+				top: 0;
+				left: 0;
+				z-index: -1;
+			}
+			.pic::after{
+				content: '';
+				position: absolute;
+				height: 0;
+				width: 165px;
+				background: #00000078;
+				top: 0;
+				left: 165px;
+				z-index: -2;
+			}
+			.word::before{
+				content: '';
+				position: absolute;
+				height: 0;
+				width: 165px;
+				background: #00000078;
+				top: 0;
+				left: 330px;
+				z-index: -3;
+			}
+			.word::after{
+				content: '';
+				position: absolute;
+				height: 0;
+				width: 165px;
+				background: #00000078;
+				top: 0;
+				left: 495px;	
+				z-index: -4;
+			}
+			.pic:hover{
+				background: #000000;
+			}
+			.pic:hover::after{
+				height: 400px;
+				z-index: 0;
+				background: #00000078;
+				transition:height .4s linear;
+			}
+			.pic:hover::before{
+				height: 400px;
+				z-index: 0;
+				background: #00000078;
+				transition:height .2s linear;
+			}
+			.pic:hover .word::after{
+				height: 400px;
+				z-index: 0;
+				background: #00000078;
+				transition:height .1s linear;
+			}
+			.pic:hover .word::before{
+				height: 400px;
+				z-index: 0;
+				background: #00000078;
+				transition:height .3s linear;
+			}
+			.pic:hover .btn{
+				bottom: 0;
+				opacity: 1;
+				transition:all .5s linear;
+			}
+			.btn{
+				position: absolute;
+				height: 110px;
+				width: 660px;
+				bottom: -90px;
+				opacity: 0;
+				z-index: 2;
+			}
+			.btn h3{
+				font-style: italic;
+				color: #16A085;
+			}
+			.btn p{
+				font-weight: bold;
+				font-size: 22px;
+				color: white;
+			}
+		</style>
+		<div class="main">
+			<div class="pic">
+				<img src="img/6c2ba6c1c8e2e3d497a811e8a073ebba.jpg" >
+				<div class="word"></div>
+				<div class="btn">
+					<h3>标题</h3>
+				<p>图片介绍</p>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>
