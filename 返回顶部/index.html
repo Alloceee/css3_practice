@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+			<!--返回顶部-->
+			<div class="scrollTop">></div>
+			<script src="js/jquery.min.js"></script>
+			<script>
+			//返回顶部
+			$('.scrollTop').on('click', function() {
+				$("html,body").animate({
+					'scrollTop': 0
+				}, 800);
+			});
+			$(window).on('scroll', function() {
+				var $scrollTop = $(window).scrollTop();
+				if ($scrollTop > 300) {
+					$('.scrollTop').fadeIn();
+				} else {
+					$('.scrollTop').fadeOut();
+				}
+			});
+			</script>
+</body>
+</html>
