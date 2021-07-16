@@ -3,8 +3,329 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="js/jquery.min.js"></script>
+    <style>
+        body{
+            font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;
+            /*font-size: 1.6rem;*/
+            color: #222;
+            background-color: #512da8;
+            margin: 0;
+            -webkit-overflow-scrolling: touch;
+            overflow-y: scroll;
+        }
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .pop-view{
+            display: none;
+            position: fixed;
+            left: 0;
+            top: 0;
+            /*padding: 10px;*/
+            height: 100vh;
+            width: 100%;
+            z-index: 2;
+        }
+        .card-box{
+            display: flex;
+            justify-content: center;
+        }
+        .card{
+            max-width: 480px;
+            background-color: #fff;
+            margin: 20px;
+        }
+        .card-header{
+            position: relative;
+        }
+        .card-header img{
+            width: 480px;
+        }
+        .card-header h2{
+            position: absolute;
+            bottom: 25px;
+            left: 20px;
+            font-weight: normal;
+        }
+        .card-header h2 a{
+            color: #fff;
+            text-decoration: none;
+        }
+        .card-body{
+            line-height: 25px;
+            padding: 0 25px;
+        }
+        .card-body .card-content{
+            padding: 25px 0;
+        }
+        .card-body footer{
+            display: block;
+            height: 60px;
+            line-height: 60px;
+            border-top: 1px solid #eee;
+        }
+        .card-body footer a{
+            color: #9c27b0;
+            text-decoration: none;
+            float: left;
+        }
+        .card-body footer .card-meta{
+            float: right;
+            webkit-box-flex: 0;
+            -ms-flex: none;
+            flex: none;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        .card-body footer .card-meta .card-meta-label{
+            display: inline-block;
+            padding-left: 2.2rem;
+            background-repeat: no-repeat;
+            background-size: 1.6rem;
+            background-position: 1% center;
+        }
+        .card-body footer .card-meta .card-meta-label:not(:first-child){
+            margin-left: 1.5rem;
+        }
+        .card-body footer .card-meta .card-meta-comment{
+            background-image: url('img/comment.svg');
+            background-position: 1% 52%;
+        }
+        .card-body footer .card-meta .card-meta-likes{
+            background-image: url('img/like.svg');
+        }
+        .pop-box{
+            /*height: calc(100vh - 40px);*/
+            overflow: auto;
+            box-sizing: border-box;
+        }
+        .pop-box .detail-article{
+            padding: 5% 15%;
+            box-sizing: border-box;
+            margin-top: 20px;
+            height: calc(100vh - 40px);
+            overflow: auto;
+            animation: fade .5s ease-out 1.3s both;
+        }
+        .pop-box .detail-article img{
+            width: 300px;
+            display: inline-block;
+            float: right;
+            margin: 10px;
+        }
+        .pop-box .detail-article .popup__title{
+            font-size: 37px;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .pop-box .detail-article p{
+            line-height: 1.5;
+            color: #222;
+        }
+        .pop-box .detail-article p:not(:last-child){
+            margin-bottom: 1.5rem;
+        }
+        .pop-box .popup__close{
+            position: absolute;
+            top: 40px;
+            right: 40px;
+            text-indent: -9999px;
+            background: url('img/close.svg') center center no-repeat;
+            background-size: contain;
+            width: 2.2rem;
+            height: 2.2rem;
+            transition: ease-in-out .7s;
+        }
+        .pop-box .popup__close:hover{
+            transform: rotateZ(180deg);
+            transition: ease-in-out .7s;
+        }
+        .pop-view:before{
+            content: "";
+            box-sizing: border-box;
+            width: 100%;
+            box-shadow: inset 0 0 0 20px #f0f0f0;
+            background: #fff;
+            position: fixed;
+            top: 50%;
+            will-change: height, top;
+            -webkit-animation: open-animation .6s cubic-bezier(0.83, 0.04, 0, 1.16) .65s both;
+            animation: open-animation .6s cubic-bezier(0.83, 0.04, 0, 1.16) .65s both;
+            z-index: -1;
+        }
+        .pop-view:after{
+            content: '';
+            width: 0;
+            height: 2px;
+            background-color: #f0f0f0;
+            position: absolute;
+            top: 50%;
+            margin-top: -1px;
+            left: 0;
+            /*will-change: width,opacity;*/
+            animation: liner-animation .6s cubic-bezier(0.83,0.04,0,1.16) both;
+            -webkit-animation:  liner-animation .6s cubic-bezier(0.83,0.04,0,1.16) both;
+        }
+        @-webkit-keyframes line-animation {
+            0%{
+                width: 0;
+                opacity: 1;
+            }
+            99%{
+                width: 100%;
+                opacity: 1;
+            }
+            100%{
+                width: 100%;
+                opacity: 0;
+            }
+        }
+        @keyframes line-animation {
+            0%{
+                width: 0;
+                opacity: 1;
+            }
+            99%{
+                width: 100%;
+                opacity: 1;
+            }
+            100%{
+                width: 100%;
+                opacity: 0;
+            }
+        }
+        @-webkit-keyframes open-animation{
+
+            0%{
+                height: 0;
+                top: 50%;
+            }
+
+            100%{
+                height: 100vh;
+                top: 0;
+            }
+        }
+        @keyframes open-animation{
+
+            0%{
+                height: 0;
+                top: 50%;
+            }
+
+            100%{
+                height: 100vh;
+                top: 0;
+            }
+        }
+        @-webkit-keyframes fade{
+
+            0%{
+                opacity: 0;
+            }
+
+            100%{
+                opacity: 1;
+            }
+        }
+        @keyframes fade{
+
+            0%{
+                opacity: 0;
+            }
+
+            100%{
+                opacity: 1;
+            }
+        }
+    </style>
 </head>
 <body>
-
+<div class="card-box">
+    <article class="card">
+        <header class="card-header">
+            <img src="img/bg.jpg">
+            <h2><a href="javascript:void(0)" class="open_title">秘密——吸引力法则</a></h2>
+        </header>
+        <div class="card-body">
+            <div class="card-content">
+                <p>这个秘密可以让你得到你想要的一切，包括快乐健康财富。你能拥有一切，达到你的目标，变成你想成为的人。我们可以拥有一切我们想拥有的东西，无论什么都能得到。</p>
+            </div>
+            <footer>
+                <a href="javascript:void(0)" class="open_title">更多内容</a>
+                <div class="card-meta">
+                    <span class="card-meta-label card-meta-comment">47</span>
+                    <span class="card-meta-label card-meta-likes">99</span>
+                </div>
+            </footer>
+        </div>
+        <div class="pop-view">
+            <div class="pop-box">
+                <div class="detail-article">
+                    <h1 class="popup__title">秘密——吸引力法则</h1>
+                    <p>这个秘密可以让你得到你想要的一切，包括快乐健康财富。</p>
+                    <img src="img/nature.jpg" class="popup__media popup__media_right" alt="The foto of nature">
+                    <p>你能拥有一切，达到你的目标，变成你想成为的人。</p>
+                    <p>我们可以拥有一切我们想拥有的东西，无论什么都能得到。</p>
+                    <p>你想住在什么样的房子里？你想当个百万富翁吗？你想拥有什么样的事业呢？你希望自己更成功吗？你究竟想要什么？</p>
+                    <p>我看到奇迹发生在许多人的生命里，比如财富上，绝症康复，精神康复，以及两性关系转变的奇迹。</p>
+                    <p>奇迹之所以出现，是因为他们知道怎么运用我们即将公布的秘密。这是生命中伟大的秘密。</p>
+                    <p>我们都具有无穷的力量，我们都被同样的定律引导着，宇宙的自然定律真的是精确无比，因此我们建造宇宙飞船没有任何问题，还可以送人上月球，甚至可以预估登陆时间，精确度在1/10秒之内，不管你是在印度还是在澳洲，纽西兰，斯德哥尔摩，伦敦，多伦多，蒙特娄还是纽约，我们都依循着一种力量，一种定律，就是吸引力。这个秘密就是吸引力定律。</p>
+                    <p>你生命里发生的一切，都是由你吸引而来的，你在心里构想的画面，会在现实生活中发生，也就是说，你心里想的一切，都会被吸引到现实生活中来。现代聪明的人一直都知道这个定律。古巴比伦时代的人，也早就知道这个定律，这得天独厚的一小群人，你想想为什么1%的人可以赚取全世界96%的财富呢？你认为这是偶然的意外吗？绝对不是，这是人为造成的。因为他们了解一件事，他们知道这个秘密。你现在也即将认识这个秘密。</p>
+                    <a href="#" class="popup__close">关闭</a>
+                </div>
+            </div>
+        </div>
+    </article>
+    <article class="card">
+        <header class="card-header">
+            <img src="img/bg.jpg">
+            <h2><a href="javascript:void(0)" class="open_title">秘密——吸引力法则2</a></h2>
+        </header>
+        <div class="card-body">
+            <div class="card-content">
+                <p>这个秘密可以让你得到你想要的一切，包括快乐健康财富。你能拥有一切，达到你的目标，变成你想成为的人。我们可以拥有一切我们想拥有的东西，无论什么都能得到。</p>
+            </div>
+            <footer>
+                <a href="javascript:void(0)" class="open_title">更多内容</a>
+                <div class="card-meta">
+                    <span class="card-meta-label card-meta-comment">47</span>
+                    <span class="card-meta-label card-meta-likes">99</span>
+                </div>
+            </footer>
+        </div>
+        <div class="pop-view">
+            <div class="pop-box">
+                <div class="detail-article">
+                    <h1 class="popup__title">秘密——吸引力法则2</h1>
+                    <p>这个秘密可以让你得到你想要的一切，包括快乐健康财富。</p>
+                    <img src="img/nature.jpg" class="popup__media popup__media_right" alt="The foto of nature">
+                    <p>你能拥有一切，达到你的目标，变成你想成为的人。</p>
+                    <p>我们可以拥有一切我们想拥有的东西，无论什么都能得到。</p>
+                    <p>你想住在什么样的房子里？你想当个百万富翁吗？你想拥有什么样的事业呢？你希望自己更成功吗？你究竟想要什么？</p>
+                    <p>我看到奇迹发生在许多人的生命里，比如财富上，绝症康复，精神康复，以及两性关系转变的奇迹。</p>
+                    <p>奇迹之所以出现，是因为他们知道怎么运用我们即将公布的秘密。这是生命中伟大的秘密。</p>
+                    <p>我们都具有无穷的力量，我们都被同样的定律引导着，宇宙的自然定律真的是精确无比，因此我们建造宇宙飞船没有任何问题，还可以送人上月球，甚至可以预估登陆时间，精确度在1/10秒之内，不管你是在印度还是在澳洲，纽西兰，斯德哥尔摩，伦敦，多伦多，蒙特娄还是纽约，我们都依循着一种力量，一种定律，就是吸引力。这个秘密就是吸引力定律。</p>
+                    <p>你生命里发生的一切，都是由你吸引而来的，你在心里构想的画面，会在现实生活中发生，也就是说，你心里想的一切，都会被吸引到现实生活中来。现代聪明的人一直都知道这个定律。古巴比伦时代的人，也早就知道这个定律，这得天独厚的一小群人，你想想为什么1%的人可以赚取全世界96%的财富呢？你认为这是偶然的意外吗？绝对不是，这是人为造成的。因为他们了解一件事，他们知道这个秘密。你现在也即将认识这个秘密。</p>
+                    <a href="#" class="popup__close">关闭</a>
+                </div>
+            </div>
+        </div>
+    </article>
+</div>
+<script>
+    $('.card .open_title').on('click',function(){
+        $(this).parents('.card').find('.pop-view').show()
+    })
+    $('.card .popup__close').on('click',function(){
+        $(this).parents('.card').find('.pop-view').hide()
+    })
+</script>
 </body>
 </html>
